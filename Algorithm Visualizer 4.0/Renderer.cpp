@@ -91,6 +91,7 @@ void Renderer::initGUI()
 			btn_vec[i]->setPosition(gap.x + (i % buttons_in_row) * (gap.x + btn.getSize().x), gap.y + (i / buttons_in_row) * (gap.y + btn.getSize().y));
 			btn_vec[i]->setString("Button");
 			pg_main->addEntity(btn_vec[i].get());
+			frm_main.push_in_navigationOrder(*btn_vec[i].get());
 		}
 
 		btn_vec[0]->setString("Sorting");
@@ -188,17 +189,6 @@ void Renderer::pollEvents()
 		if (curAppMode == AppMode::MAIN) frm_main.pollEvents(event);
 		else {
 			CHOOSE_CLASS_FOR(getFrame().pollEvents(event));
-
-			/*using enum AppMode;
-			switch (curAppMode)
-			{
-			case MAIN: break;
-			case SORT: sorting.getFrame().pollEvents(event); break;
-			case SEARCH: searching.getFrame().pollEvents(event); break;
-			case PATHFIND:
-				auto *x = &(pathfinding.getFrame()); 
-				x->pollEvents(event); break;
-			}*/
 		}
 	}
 }

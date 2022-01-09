@@ -41,11 +41,12 @@ void TwoDAlgo::loadVisVec()
 		int i = index / cols;
 		sf::Vector2f size(vec.getSize(index));
 		return 
-			pg_visvec->getPosition() + 
+			pg_visvec->getPosition() + sf::Vector2f(j * size.x, i * size.y);
+			/*pg_visvec->getPosition() +
 			sf::Vector2f(
 				(j - cols * 0.5f) * size.x + pg_visvec->getMaxSize().x * 0.5f + size.x * 0.5f,
 				(i - rows * 0.5f) * size.y + pg_visvec->getMaxSize().y * 0.5f + size.y * 0.5f
-			);
+			);*/
 	});
 
 	vec.fill(rows * cols, 0);

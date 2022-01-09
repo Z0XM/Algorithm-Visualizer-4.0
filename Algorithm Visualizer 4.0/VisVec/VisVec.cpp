@@ -233,7 +233,7 @@ void VisVec::turnOffIndexTracker(int* index)
 	if (m_recording) {
 		m_indexTracker_id_map.at(index).second = false;
 		pauseRecording();
-		saveIndexTrackers();
+		saveFrame();
 		resumeRecording();
 	}
 }
@@ -243,7 +243,7 @@ void VisVec::turnOnIndexTracker(int* index)
 	if (m_recording) {
 		m_indexTracker_id_map.at(index).second = true;
 		pauseRecording();
-		saveIndexTrackers();
+		saveFrame();
 		resumeRecording();
 	}
 }
@@ -303,7 +303,7 @@ void VisVec::randomize()
 	}
 }
 
-void VisVec::saveIndexTrackers()
+void VisVec::saveFrame()
 {
 	if (m_recording) {
 		m_indexTrackerValues.push(std::unordered_map<int, int>());
@@ -321,17 +321,13 @@ void VisVec::saveIndexTrackers()
 		m_operationStates.push(OperationState::INDEX);
 	}
 }
-
 void VisVec::draw(sf::RenderWindow& window, sf::RenderStates states)
 {
 	sf::RectangleShape rect;
 	for (int i = 0; i < m_playBuffer.size(); i++) {
-		
 		rect.setFillColor(m_mapper.color(i, m_playBuffer[i]));
 		rect.setSize(m_mapper.size(i, m_playBuffer[i]));
 		rect.setPosition(m_mapper.position(i, m_playBuffer[i]));
-
-		rect.setOrigin(rect.getSize() * 0.5f);
 
 		if (i < m_doesIndexHasColorMapped.size() && m_doesIndexHasColorMapped[i] != -1) {
 			rect.setFillColor(m_id_color_map[m_doesIndexHasColorMapped[i]]);
@@ -360,14 +356,14 @@ void VisVec::stopRecording()
 void VisVec::pauseRecording()
 {
 	if (m_recording) {
-		if (m_operationStates.back() != OperationState::PAUSE)
+		if (!m_operationStates.empty() && m_operationStates.back() != OperationState::PAUSE)
 			m_operationStates.push(OperationState::PAUSE);
 	}
 }
 void VisVec::resumeRecording()
 {
 	if (m_recording) {
-		if (m_operationStates.back() != OperationState::RESUME)
+		if (!m_operationStates.empty() && m_operationStates.back() != OperationState::RESUME)
 			m_operationStates.push(OperationState::RESUME);
 	}
 }

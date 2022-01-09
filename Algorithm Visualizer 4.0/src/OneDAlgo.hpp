@@ -27,6 +27,7 @@ protected:
 
 	zui::TextButton_ptr btn_shuffle, btn_reload;
 	zui::Slider_ptr sld_width;
+	zui::Textbox_ptr tb_info;
 };
 
 

@@ -19,7 +19,7 @@ ONE_D_ALGORITHMS_FOR(Sorting)
 			for (i = 0; i < vec.size() - 1; i++) {
 				for (j = 0; j < vec.size() - i - 1; j++) {
 					k = j + 1;
-					vec.saveIndexTrackers();
+					vec.saveFrame();
 
 					if (vec[j + 1] < vec[j])
 						vec.swap(j, j + 1);
@@ -47,7 +47,7 @@ ONE_D_ALGORITHMS_FOR(Sorting)
 				vec.assign(j + 1, vec[j]);
 				j--;
 
-				vec.saveIndexTrackers();
+				vec.saveFrame();
 			}
 			vec.assign(j + 1, v);
 		}
@@ -72,7 +72,7 @@ ONE_D_ALGORITHMS_FOR(Sorting)
 				if (vec[j] < vec[smallest_i])
 					smallest_i = j;
 
-				vec.saveIndexTrackers();
+				vec.saveFrame();
 			}
 			vec.swap(i, smallest_i);
 		}
@@ -100,7 +100,7 @@ ONE_D_ALGORITHMS_FOR(Sorting)
 			for (i = left; i < right; i++) {  // from left to right if anything is smaller swap and place it before pivot
 				if (vec[i] < pivot)
 					vec.swap(i, swap_index++);
-				vec.saveIndexTrackers();
+				vec.saveFrame();
 			}
 
 			vec.swap(swap_index, right); // swap pivot so that further recursions dont use the same pivot
@@ -138,7 +138,7 @@ ONE_D_ALGORITHMS_FOR(Sorting)
 				while ((lc = (l < vec.size() && vec[l] < pivot)) | (rc = (r >= 0 && vec[r] > pivot))) { // inc left if should, dec right if should
 					if (lc)l++;
 					if (rc)r--;
-					vec.saveIndexTrackers();
+					vec.saveFrame();
 				}
 
 				if (l < r)vec.swap(l, r); // swap left and right
@@ -183,7 +183,7 @@ ONE_D_ALGORITHMS_FOR(Sorting)
 		std::vector<int> a(vec.begin() + left, vec.begin() + mid + 1);
 		std::vector<int> b(vec.begin() + mid + 1, vec.begin() + right + 1);
 
-		vec.saveIndexTrackers();
+		vec.saveFrame();
 
 		while (i < a.size() && j < b.size()) {
 			if (a[i] < b[j])
@@ -194,17 +194,17 @@ ONE_D_ALGORITHMS_FOR(Sorting)
 			il = i + left;
 			jl = j + mid + 1;
 
-			vec.saveIndexTrackers();
+			vec.saveFrame();
 		}
 		while (i < a.size()) {
 			vec.assign(k++, a[i++]);
 			il = i + left;
-			vec.saveIndexTrackers();
+			vec.saveFrame();
 		}
 		while (j < b.size()) {
 			vec.assign(k++, b[j++]);
 			jl = j + mid + 1;
-			vec.saveIndexTrackers();
+			vec.saveFrame();
 		}
 
 		vec.removeIndexTracker(&left);
@@ -236,7 +236,7 @@ ONE_D_ALGORITHMS_FOR(Sorting)
 			vec.setIndexColor(i, sf::Color::Green);
 			vec.setIndexColor(left, sf::Color::Blue);
 			vec.setIndexColor(right, sf::Color::Blue);
-			vec.saveIndexTrackers();
+			vec.saveFrame();
 
 			vec.swap(i, largest);
 

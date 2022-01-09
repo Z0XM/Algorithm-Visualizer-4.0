@@ -66,8 +66,8 @@ void AlgoClass::loadParentElements()
 	frm_main.addEntity(pg_head.get());
 	frm_main.addEntity(pg_algo.get());
 	frm_main.addEntity(pg_visvec.get());
-
-
+	for (int i = 0; i < btn_algo.size(); i++)
+		frm_main.push_in_navigationOrder(*btn_algo[i].get());
 
 	sld_speed->setVariable(speed, 3.f, 0.f);
 
@@ -105,6 +105,8 @@ void AlgoClass::unloadParentElements()
 	frm_main.removeEntity(pg_head.get());
 	frm_main.removeEntity(pg_algo.get());
 	frm_main.removeEntity(pg_visvec.get());
+	frm_main.clear_navigationOrder();
+
 	zui::destroy(pg_head);
 	zui::destroy(pg_algo);
 	zui::destroy(pg_visvec);

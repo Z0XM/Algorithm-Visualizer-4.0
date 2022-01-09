@@ -54,7 +54,7 @@ public:
 	void swap(int first, int second);
 	void assign(int index, int value);
 
-	void saveIndexTrackers();
+	void saveFrame();
 	void turnOffIndexTracker(int* index);
 	void turnOnIndexTracker(int* index);
 

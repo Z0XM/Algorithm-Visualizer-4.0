@@ -5,17 +5,17 @@
 #define SETUP_ALGO(ALGO_N, ...) \
 	template <int N> void setActionLoop() \
 	{ \
-		btn_algo[N - 1]->setAction([this] \
+		btn_algo[N]->setAction([this] \
 			{ \
 				vec.swapAndClearBuffer(); \
-				algo<N - 1>(); \
+				algo<N>(); \
 			} \
 		); \
-		setActionLoop<N - 1>(); \
+		setActionLoop<N + 1>(); \
 	} \
-	template <> void setActionLoop<0>() {} \
+	template <> void setActionLoop<ALGO_N>() {} \
 	void runSetActionLoop() override { \
-		setActionLoop<ALGO_N>(); \
+		setActionLoop<0>(); \
 	} \
 	template <int N> void algo(); \
 	void setupAlgoNames(){ \

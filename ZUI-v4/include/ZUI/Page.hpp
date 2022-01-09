@@ -279,6 +279,14 @@ public:
 	sf::Vector2f getLastMouseOffset() const;
 
 	////////////////////////////////////////////////////////////
+	/// \brief Set the action when mouse moves over page 
+	/// 
+	/// \param onMouseMove -> action on Mouse Move
+	///
+	////////////////////////////////////////////////////////////
+	void setMouseMoveAction(std::function<void()> onMouseMove);
+
+	////////////////////////////////////////////////////////////
 	/// \brief Check if the point is inside the object
 	///		   Definition of if the point is inside the object may vary with different zui objects
 	/// 
@@ -474,6 +482,8 @@ private:
 	Button m_maximise;						/// < maximise button for the page
 	sf::FloatRect m_lastActiveRegion;		/// < stores the last active region for m_maximise
 	sf::RectangleShape m_background;		/// < background of the page
+
+	std::function<void()> m_onMouseMove;		/// < action to call on mouse move
 };
 
 
