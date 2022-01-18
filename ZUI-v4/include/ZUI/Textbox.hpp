@@ -459,6 +459,9 @@ protected:
 	sf::RectangleShape m_box;       /// < box object of textbox
     mutable sf::Text m_text;        /// < text object of textbox, mutable for cursor updating
     TextAlign m_alignment;          /// < alignment of text with the box
+
+    sf::Text m_textSize;           /// < used to determine fixed position of text based on letter X
+
 };
 
 
