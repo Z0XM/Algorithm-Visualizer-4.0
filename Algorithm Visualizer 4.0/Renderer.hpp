@@ -4,6 +4,7 @@
 #include "src/Sorting.hpp"
 #include "src/Searching.hpp"
 #include "src/Pathfinding.hpp"
+#include "src/Custom.hpp"
 
 
 class Renderer {
@@ -22,7 +23,7 @@ public:
 
 private:
 	enum class AppMode {
-		MAIN, SORT, SEARCH, PATHFIND
+		MAIN, SORT, SEARCH, PATHFIND, CUSTOM
 	} curAppMode;
 
 	void initWindow();
@@ -34,11 +35,12 @@ private:
 	sf::RenderWindow window;
 	bool running;
 
-	sf::Font font;
+	sf::Font font, creditFont;
 
 	Sorting sorting;
 	Searching searching;
 	Pathfinding pathfinding;
+	Custom custom;
 
 	zui::Frame frm_main;
 	zui::Page_ptr pg_main;
