@@ -2,12 +2,15 @@
 #include <ZUI.hpp>
 #include <VisVec.hpp>
 
+#include <iostream>
+
 #define SETUP_ALGO(ALGO_N, ...) \
 	template <int N> void setActionLoop() \
 	{ \
 		btn_algo[N]->setAction([this] \
 			{ \
 				vec.swapAndClearBuffer(); \
+				current_algo = N; \
 				algo<N>(); \
 			} \
 		); \
@@ -69,6 +72,8 @@ protected:
 
 	VisVec vec;
 	std::vector<int> vec_copy;
+
+	int current_algo;
 };
 
 

@@ -9,6 +9,8 @@ void AlgoClass::init(sf::RenderWindow& window)
 	frm_main.setWindow(window);
 
 	setupAlgoNames();
+
+	current_algo = -1;
 }
 
 void AlgoClass::placeElement(zui::Textbox* tb, zui::Page* pg, float x, float y, const std::string& str)
@@ -139,6 +141,8 @@ zui::Frame& AlgoClass::getFrame()
 void AlgoClass::draw(sf::RenderWindow& window, sf::RenderStates states)
 {
 	vec.play(sf::seconds(speed), window);
+	if (!vec.isAnimating())
+		current_algo = -1;
 
 	window.draw(bound);
 

@@ -78,7 +78,7 @@ void OneDAlgo::loadGUI()
 			int index = (mousePos.x) / (1 + barWidth);
 			index = std::min(index, (int)vec.size() - 1);
 			index = std::max(index, 0);
-			tb_info->setString(std::to_string(vec[index]));
+			tb_info->setString(std::to_string(vec.getBufferValue(index)));
 		}
 	);
 }
