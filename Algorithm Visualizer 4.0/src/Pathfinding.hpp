@@ -289,7 +289,7 @@ TWO_D_ALGORITHMS_FOR(Pathfinding) {
 
 		sld_size = zui::createFromStyleSheet<zui::Slider>("sld");
 		placeElement(sld_size.get(), pg_head.get(), 0, 0, "Size");
-		sld_size->setVariable(maze_size, 3, 50, true);
+		sld_size->setVariable(maze_size, 3, 25, true);
 		sld_size->attachAction([this]
 			{
 				tb_size->setString(std::to_string((int)maze_size * 2 + 1));
@@ -299,20 +299,56 @@ TWO_D_ALGORITHMS_FOR(Pathfinding) {
 		tb_size = zui::createFromStyleSheet<zui::Textbox>("sld");
 		placeElement(tb_size.get(), pg_head.get(), 0, 1, std::to_string((int)maze_size * 2 + 1));
 
+		tb_info = zui::copy(tb_size);
+		placeElement(tb_info.get(), pg_head.get(), 1, 3, "");
+
+		pg_visvec->setMouseMoveAction([this]
+			{
+				sf::Vector2f mousePos = pg_visvec->getLocalMousePosition();
+				int row = mousePos.y / vec.getSize(0).y;
+				int col = mousePos.x / vec.getSize(0).x;
+				if (row >= 0 && row < rows && col >= 0 && col < cols) {
+					if (current_algo == 0) {
+						if (isStart(row, col)) tb_info->setString("Start");
+						else if (isTarget(row, col)) tb_info->setString("Target");
+
+						else {
+							int value = vec.getBufferValue(row * cols + col);
+
+							std::string str;
+							switch (value) {
+							case WALL: str = "Wall"; break;
+							case PATH: str = "Path"; break;
+							case VISITED: str = "Visited"; break;
+							case CORRECT_PATH: str = "Correct"; break;
+							case WRONG_PATH: str = "Wrong"; break;
+							case OPTION: str = "Option"; break;
+							}
+
+							tb_info->setString(str);
+						}
+					}
+					else if (current_algo == 1) {
+
+					}
+				}
+			}
+		);
+		
 
 		btn_gen->callAction();
 
 		vec.setColorMapper([this](int index, int value)
 			{
 				switch (value) {
-				case 2: return sf::Color::Cyan;
-				case 9: return sf::Color::Magenta; // Target
-				case 6: return sf::Color::Yellow; // Target
-				case 5: return sf::Color::White;  // Path
-				case 4: return sf::Color::Red;     // Wrong Path
-				case 3: return sf::Color::Green;   // Final Path / Trace
-				case 1: return sf::Color(126, 126, 126);   // Path
-				case 0: return sf::Color::Black;   // Wall
+				case START: return sf::Color::Cyan;
+				case TARGET: return sf::Color::Magenta;
+				case OPTION: return sf::Color::Yellow;
+				case VISITED: return sf::Color::White;
+				case WRONG_PATH: return sf::Color::Red;
+				case CORRECT_PATH: return sf::Color::Green;
+				case PATH: return sf::Color(126, 126, 126);
+				case WALL: return sf::Color::Black;
 				default: return sf::Color::White;
 				}
 			}
@@ -324,12 +360,13 @@ TWO_D_ALGORITHMS_FOR(Pathfinding) {
 		zui::destroy(btn_gen);
 		zui::destroy(sld_size);
 		zui::destroy(tb_size);
+		zui::destroy(tb_info);
 	}
 
 	float maze_size;
 	zui::TextButton_ptr btn_gen;
 	zui::Slider_ptr sld_size;
-	zui::Textbox_ptr tb_size;
+	zui::Textbox_ptr tb_size, tb_info;
 	
 	sf::Vector2i start_pos, end_pos;
 };
